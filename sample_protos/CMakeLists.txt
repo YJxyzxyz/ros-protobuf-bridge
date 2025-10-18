@@ -6,7 +6,7 @@ find_package(Protobuf REQUIRED)
 #
 set(PROTO_FILES
     publish_info.proto
-    
+    system_status.proto
 )
 
 #

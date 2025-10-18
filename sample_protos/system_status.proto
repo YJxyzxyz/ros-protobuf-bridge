@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package superbai.sample;
+
+import "publish_info.proto";
+
+message CpuCore {
+  string name = 1;
+  double load = 2;
+}
+
+message SensorMetric {
+  string name = 1;
+  double value = 2;
+  string unit = 3;
+}
+
+message SystemStatus {
+  string hostname = 1;
+  uint64 uptime_sec = 2;
+  repeated CpuCore cores = 3;
+  repeated SensorMetric sensors = 4;
+  bool healthy = 5;
+  PublishInfo last_publish = 6;
+}
