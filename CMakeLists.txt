@@ -5,10 +5,15 @@ project(myproject)
 # which we need to find_package() individually:
 #   roscpp (the client library)
 #   std_msgs (contains the std_msgs/String message type)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp_traits rostime
   roscpp
   roslib)
+
+find_package(Protobuf REQUIRED)
 
 catkin_package()
 # catkin_package(
@@ -35,25 +40,58 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_library(ros_protobuf_bridge_utils src/protobuf_utils.cpp)
+target_link_libraries(ros_protobuf_bridge_utils
+  PUBLIC
+    ${roscpp_LIBRARIES}
+    protobuf::libprotobuf)
+target_include_directories(ros_protobuf_bridge_utils PUBLIC include)
+
 add_executable(pb_talker pb_talker.cpp
 )
 
 add_dependencies(pb_talker copy_traits_files copy_serialization_files)
 
-target_link_libraries(pb_talker 
-${roscpp_LIBRARIES} 
+target_link_libraries(pb_talker
+${roscpp_LIBRARIES}
 pb_proto
 roscpp_proto_serialization
+ros_protobuf_bridge_utils
 )
 
 
 add_executable(pb_listener pb_listener.cpp)
-target_link_libraries(pb_listener 
-${roscpp_LIBRARIES} 
+target_link_libraries(pb_listener
+${roscpp_LIBRARIES}
 pb_proto
 roscpp_proto_serialization
+ros_protobuf_bridge_utils
 )
 add_dependencies(pb_listener copy_traits_files copy_serialization_files)
+
+add_executable(system_status_talker system_status_talker.cpp)
+target_link_libraries(system_status_talker
+  ${roscpp_LIBRARIES}
+  pb_proto
+  roscpp_proto_serialization
+  ros_protobuf_bridge_utils)
+add_dependencies(system_status_talker copy_traits_files copy_serialization_files)
+
+add_executable(pb_json_bridge pb_json_bridge.cpp)
+target_link_libraries(pb_json_bridge
+  ${roscpp_LIBRARIES}
+  pb_proto
+  roscpp_proto_serialization
+  ros_protobuf_bridge_utils)
+add_dependencies(pb_json_bridge copy_traits_files copy_serialization_files)
+
+add_executable(pb_topic_logger pb_topic_logger.cpp)
+target_link_libraries(pb_topic_logger
+  ${roscpp_LIBRARIES}
+  pb_proto
+  roscpp_proto_serialization
+  ros_protobuf_bridge_utils)
+add_dependencies(pb_topic_logger copy_traits_files copy_serialization_files)
 
 add_executable(talker talker.cpp)
 target_link_libraries(talker ${roscpp_LIBRARIES} ${std_msgs_LIBRARIES})
