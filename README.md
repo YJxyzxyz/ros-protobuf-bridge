@@ -1,6 +1,6 @@
 # ROS Protobuf Bridge
 
-ROS Protobuf Bridge 展示了如何在 ROS `roscpp` 节点中直接发送和接收 Google Protocol Buffers（以下简称 Protobuf）消息。项目通过重写 ROS 的 `message_traits` 与 `serialization` 扩展点，让任意继承自 `google::protobuf::Message` 的类型都能像原生 ROS 消息一样工作，并附带完整的示例节点、测试用例与 Docker 环境，帮助你在现有工程中快速复用这套机制。
+该项目通过重写 ROS 的 `message_traits` 与 `serialization` 扩展点，让任意继承自 `google::protobuf::Message` 的类型都能像原生 ROS 消息一样工作，并附带完整的示例节点、测试用例与 Docker 环境，帮助你在现有工程中快速复用这套机制。
 
 ---
 
@@ -135,5 +135,5 @@ ROS Protobuf Bridge 展示了如何在 ROS `roscpp` 节点中直接发送和接�
 ---
 
 ## 许可证
-本项目基于 BSD-3-Clause 许可证发布，完整内容见 [LICENSE.txt](LICENSE.txt)。
+本项目基于 MIT 许可证发布，完整内容见 [LICENSE.txt](LICENSE.txt)。
 
