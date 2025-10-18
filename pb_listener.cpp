@@ -32,6 +32,8 @@
 #include "ros/ros.h"
 
 #include "publish_info.pb.h"
+
+#include "ros_protobuf_bridge/protobuf_utils.h"
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
@@ -79,6 +81,9 @@ int main(int argc, char **argv) {
    */
   // %Tag(SUBSCRIBER)%
   ros::Subscriber sub = n.subscribe("/Sorbai", 1000, chatterCallback);
+  ROS_INFO_STREAM("Listening for protobuf messages on /Sorbai\n"
+                  << ros_protobuf_bridge::DescribeMessageType<
+                         superbai::sample::PublishInfo>());
   // %EndTag(SUBSCRIBER)%
 
   /**
