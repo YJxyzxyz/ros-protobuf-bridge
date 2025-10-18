@@ -48,12 +48,19 @@
    cd docker/build
    docker build --network host -t ros_protobuf:noetic -f ros_x86.dockerfile .
    ```
+
+   
+
 2. 启动容器并挂载当前仓库：
+
    ```bash
    cd docker/scripts
    ./ros_docker_run.sh
    ```
    脚本会创建名为 `ros_noetic_proto` 的容器，并将仓库映射到容器内 `/work`。
+
+   
+
 3. 进入容器环境：
    ```bash
    ./ros_docker_into.sh
